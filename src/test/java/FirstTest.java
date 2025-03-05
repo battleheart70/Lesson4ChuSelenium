@@ -27,15 +27,19 @@ public class FirstTest {
 
   @ParameterizedTest
   @CsvFileSource(resources = "/testdata.csv", numLinesToSkip = 1)
-  void openLinksByTextTest(String chapterName, String linkText, String linkUrl, String headerName, boolean isFrame){
+  void openLinksByTextTest(
+      String chapterName, String linkText, String linkUrl, String headerName, boolean isFrame) {
 
-    WebElement chapterSection = driver.findElement(By.xpath("//div[h5[text()='" + chapterName + "']]"));
+    WebElement chapterSection =
+        driver.findElement(By.xpath("//div[h5[text()='" + chapterName + "']]"));
+    Assertions.assertEquals(
+        chapterName,
+        chapterSection.findElement(By.tagName("h5")).getText(),
+        "Chapter name должен быть " + chapterName);
     WebElement linkInChapter = chapterSection.findElement(By.linkText(linkText));
     linkInChapter.click();
 
-
     Assertions.assertEquals(linkUrl, driver.getCurrentUrl(), "URL должен соответствовать ожидаемому значению");
-
 
     if (isFrame) {
       WebElement frameElement = driver.findElement(By.cssSelector("frame[name='frame-header']"));
@@ -43,8 +47,7 @@ public class FirstTest {
     }
 
     String actualHeading = driver.findElement(By.cssSelector("h1.display-6")).getText();
-    Assertions.assertTrue(actualHeading.contains(headerName),
-            "Heading should contain expected text: " + headerName);
+    Assertions.assertTrue(
+        actualHeading.contains(headerName), "Заголовок должен содержать текст: " + headerName);
   }
-
 }
