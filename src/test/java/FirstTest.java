@@ -30,15 +30,15 @@ public class FirstTest {
   void openLinksByTextTest(
       String chapterName, String linkText, String linkUrl, String headerName, boolean isFrame) {
 
-    WebElement chapterSection =
-        driver.findElement(By.xpath("//div[h5[text()='" + chapterName + "']]"));
+    WebElement chapterSection = driver.findElement(By.xpath("//div[h5[text()='" + chapterName + "']]"));
     Assertions.assertEquals(
         chapterName,
         chapterSection.findElement(By.tagName("h5")).getText(),
         "Chapter name должен быть " + chapterName);
-    WebElement linkInChapter = chapterSection.findElement(By.linkText(linkText));
-    linkInChapter.click();
 
+    WebElement linkInChapter = chapterSection.findElement(By.linkText(linkText));
+
+    linkInChapter.click();
     Assertions.assertEquals(linkUrl, driver.getCurrentUrl(), "URL должен соответствовать ожидаемому значению");
 
     if (isFrame) {
